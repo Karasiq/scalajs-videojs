@@ -1,4 +1,4 @@
-# scalajs-videojs
+# scalajs-videojs [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.5.svg)](http://scala-js.org)
 [Scala.js](http://scala-js.org/) bindings for [Video.js](https://github.com/videojs/video.js)
 
 # How to use
