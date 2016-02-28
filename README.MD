@@ -8,7 +8,7 @@ libraryDependencies += "com.karasiq" %%% "scalajs-videojs" % "1.0.0"
 ```
 
 # Examples
-* [Project test page](https://github.com/Karasiq/scalajs-videojs/tree/master/test/frontend/src/main/scala/com/karasiq/frontend/TestApp.scala)
+* [Project test page](https://github.com/Karasiq/scalajs-videojs/blob/master/test/frontend/src/main/scala/com/karasiq/scalajstest/frontend/TestApp.scala)
 
 # License
 The MIT License (MIT)
