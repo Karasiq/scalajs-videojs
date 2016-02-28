@@ -3,7 +3,6 @@ package com.karasiq.scalajstest.frontend
 import com.karasiq.videojs.{VideoJS, VideoJSOptions, VideoSource}
 import org.scalajs.dom
 import org.scalajs.jquery._
-import rx._
 
 import scala.language.postfixOps
 import scala.scalajs.js
@@ -13,8 +12,6 @@ import scalatags.JsDom.all._
 
 @JSExport
 object TestApp extends JSApp {
-  private implicit val context = implicitly[Ctx.Owner]
-
   @JSExport
   override def main(): Unit = {
     jQuery(() ⇒ {
