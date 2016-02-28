@@ -1,6 +1,6 @@
 package com.karasiq.scalajstest.frontend
 
-import com.karasiq.videojs.{VideoJS, VideoJSOptions, VideoSource}
+import com.karasiq.videojs.{VideoJS, VideoJSOptions, VideoJSPlayer, VideoSource}
 import org.scalajs.dom
 import org.scalajs.jquery._
 
@@ -55,10 +55,9 @@ object TestApp extends JSApp {
     )
     val settings = VideoJSOptions(sources, controls = true, width = 640, height = 360, techOrder = Seq("youtube"), additional = Seq("youtube" → js.Dynamic.literal(iv_load_policy = 1)))
     dom.console.log(settings)
-    VideoJS(videoContainer, settings, js.ThisFunction.fromFunction1 { video: js.Dynamic ⇒
-      video.on("ended", () ⇒ {
-        dom.console.log("Youtube on ended")
-      })
+    VideoJS(videoContainer, settings, js.ThisFunction.fromFunction1 { video: VideoJSPlayer ⇒
+      video.playbackRate(0.5)
+      video.play()
     })
   }
 }
