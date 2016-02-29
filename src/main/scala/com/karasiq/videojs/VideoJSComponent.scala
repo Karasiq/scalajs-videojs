@@ -1,6 +1,6 @@
 package com.karasiq.videojs
 
-import org.scalajs.dom
+import org.scalajs.dom.Element
 import org.scalajs.dom.raw.NodeList
 
 import scala.scalajs.js
@@ -19,9 +19,9 @@ object VideoJSComponent extends js.Object {
     */
   def apply(player: VideoJSPlayer, options: js.Object = ???, ready: js.Function = ???): VideoJSComponent = js.native
 
-  def getComponent(name: String): VideoJSComponent = js.native
+  def getComponent(name: String): js.Object = js.native
 
-  def registerComponent(name: String, comp: VideoJSComponent): Unit = js.native
+  def registerComponent(name: String, comp: js.Object): Unit = js.native
 }
 
 /**
@@ -29,9 +29,9 @@ object VideoJSComponent extends js.Object {
   */
 @js.native
 trait VideoJSComponent extends js.Object {
-  def $(selector: String, context: dom.Element | String = ???): dom.Element = js.native
+  def $(selector: String, context: Element | String = ???): Element = js.native
 
-  def $$(selector: String, context: dom.Element | String = ???): NodeList = js.native
+  def $$(selector: String, context: Element | String = ???): NodeList = js.native
 
   def addChild(child: String | VideoJSComponent, options: js.Object = ???): Unit = js.native
 
@@ -45,15 +45,15 @@ trait VideoJSComponent extends js.Object {
 
   def clearTimeout(timeoutId: Int): Unit = js.native
 
-  def contentEl(): dom.Element = js.native
+  def contentEl(): Element = js.native
 
-  def createEl(tagName: String = ???, properties: js.Object = ???, attributes: js.Object = ???): dom.Element = js.native
+  def createEl(tagName: String = ???, properties: js.Object = ???, attributes: js.Object = ???): Element = js.native
 
   def dimensions(width: Int | String, height: Int | String): Unit = js.native
 
   def dispose(): Unit = js.native
 
-  def el(): dom.Element = js.native
+  def el(): Element = js.native
 
   def enableTouchActivity(): Unit = js.native
 
@@ -111,7 +111,7 @@ trait VideoJSComponent extends js.Object {
 
   def handleKeyPress(): Unit = js.native
 
-  def controlText(el: dom.Element): dom.Element = js.native
+  def controlText(el: Element): Element = js.native
 
   def handleBlur(): Unit = js.native
 

@@ -1,8 +1,7 @@
 package com.karasiq.videojs
 
-import org.scalajs.dom
-import org.scalajs.dom.MediaError
 import org.scalajs.dom.raw.TimeRanges
+import org.scalajs.dom.{Element, MediaError}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName
@@ -17,18 +16,18 @@ object VideoJSPlayer extends js.Object {
     * @param options Object of option names and values
     * @param ready Ready callback function
     */
-  def apply(tag: dom.Element, options: js.Object = ???, ready: js.Function = ???): VideoJSPlayer = js.native
+  def apply(tag: Element, options: js.Object = ???, ready: js.Function = ???): VideoJSPlayer = js.native
 
   /**
     * Gets tag settings
     * @param tag The player tag
     * @return An array of sources and track objects
     */
-  def getTagSettings(tag: dom.Element): js.Object = js.native
+  def getTagSettings(tag: Element): js.Object = js.native
 }
 
 /**
-  * See http://docs.videojs.com/docs/api/player.html
+  * @see [[http://docs.videojs.com/docs/api/player.html]]
   */
 //noinspection AccessorLikeMethodIsEmptyParen
 @js.native
@@ -93,7 +92,7 @@ trait VideoJSPlayer extends VideoJSComponent {
   /**
     * Create the component's DOM element
     */
-  def createEl(): dom.Element = js.native
+  def createEl(): Element = js.native
 
   /**
     * Returns the fully qualified URL of the current source value e.g. `http://mysite.com/video.mp4`
@@ -342,7 +341,7 @@ trait VideoJSPlayer extends VideoJSComponent {
   /**
     * Get an array of remote html track elements
     */
-  def remoteTextTrackEls(): js.Array[dom.Element] = js.native
+  def remoteTextTrackEls(): js.Array[Element] = js.native
 
   /**
     * Get an array of remote text tracks

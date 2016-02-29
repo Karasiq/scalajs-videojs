@@ -1,6 +1,6 @@
 package com.karasiq.scalajstest.frontend
 
-import com.karasiq.videojs.{VideoJS, VideoJSOptions, VideoJSPlayer, VideoSource}
+import com.karasiq.videojs._
 import org.scalajs.dom
 import org.scalajs.jquery._
 
@@ -34,7 +34,7 @@ object TestApp extends JSApp {
     )
     val settings = VideoJSOptions(sources, controls = true, poster = "http://www.webmfiles.org/wp-content/uploads/2010/05/webm-files.jpg", width = 640, height = 360)
     dom.console.log(settings)
-    VideoJS(videoContainer, settings, js.ThisFunction.fromFunction1 { video: VideoJSPlayer ⇒
+    VideoJS(videoContainer, settings, VjsUtils.ready { video ⇒
       video.on("ended", () ⇒ {
         dom.console.log("Video on ended")
       })
@@ -55,7 +55,7 @@ object TestApp extends JSApp {
     )
     val settings = VideoJSOptions(sources, controls = true, width = 640, height = 360, techOrder = Seq("youtube"), additional = Seq("youtube" → js.Dynamic.literal(iv_load_policy = 1)))
     dom.console.log(settings)
-    VideoJS(videoContainer, settings, js.ThisFunction.fromFunction1 { video: VideoJSPlayer ⇒
+    VideoJS(videoContainer, settings, VjsUtils.ready { video ⇒
       video.playbackRate(0.5)
       video.play()
     })
