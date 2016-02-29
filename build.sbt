@@ -17,7 +17,7 @@ lazy val librarySettings = Seq(
   ),
   jsDependencies ++= {
     val videoJs = "org.webjars.bower" % "video-js" % "5.7.1"
-    Seq(videoJs / "dist/video.min.js")
+    Seq(RuntimeDOM, videoJs / "dist/video.min.js")
   },
   publishMavenStyle := true,
   publishTo := {
