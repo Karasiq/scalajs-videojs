@@ -420,7 +420,7 @@ trait VideoJSPlayer extends VideoJSComponent {
   /**
     * @return The current video source when getting
     */
-  def src(): VideoSource = js.native
+  def src(): String = js.native
 
   /**
     * Check to see if fullscreen is supported

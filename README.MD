@@ -1,10 +1,10 @@
-# scalajs-videojs [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.5.svg)](http://scala-js.org)
+# scalajs-videojs [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.5.svg)](http://scala-js.org) [![Version](http://img.shields.io/badge/version-1.0.1-blue.svg?style=flat)]()
 [Scala.js](http://scala-js.org/) bindings for [Video.js](https://github.com/videojs/video.js)
 
 # How to use
 Add dependency to your `build.sbt`:
 ```scala
-libraryDependencies += "com.karasiq" %%% "scalajs-videojs" % "1.0.0"
+libraryDependencies += "com.karasiq" %%% "scalajs-videojs" % "1.0.1"
 ```
 
 # Examples

@@ -19,7 +19,7 @@ object VideoJS extends VideoJSComponent {
     * @param settings Optional options object for config/settings
     * @param ready Optional ready callback
     */
-  def apply(element: String | Element, settings: js.Object = ???, ready: js.Function = ???): Unit = js.native
+  def apply(element: String | Element, settings: js.Object = ???, ready: js.Function = ???): js.Object = js.native
 
   def addClass(element: Element, classToAdd: String): Unit = js.native
 
