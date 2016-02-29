@@ -131,5 +131,6 @@ object VideoJS extends VideoJSComponent {
 
   def toggleElClass(element: Element, classToToggle: String, predicate: Boolean | js.Function = ???): Unit = js.native
 
-  def trigger(element: js.Object, event: String | js.Object, hash: js.Object = ???): Unit = js.native
+  @JSName("trigger")
+  def triggerEl(element: js.Object, event: String | js.Object, hash: js.Object = ???): Unit = js.native
 }
