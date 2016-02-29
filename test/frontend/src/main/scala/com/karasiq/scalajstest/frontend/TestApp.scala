@@ -34,7 +34,7 @@ object TestApp extends JSApp {
     )
     val settings = VideoJSOptions(sources, controls = true, poster = "http://www.webmfiles.org/wp-content/uploads/2010/05/webm-files.jpg", width = 640, height = 360)
     dom.console.log(settings)
-    VideoJS(videoContainer, settings, js.ThisFunction.fromFunction1 { video: js.Dynamic ⇒
+    VideoJS(videoContainer, settings, js.ThisFunction.fromFunction1 { video: VideoJSPlayer ⇒
       video.on("ended", () ⇒ {
         dom.console.log("Video on ended")
       })

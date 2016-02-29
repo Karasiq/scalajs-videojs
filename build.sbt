@@ -61,8 +61,6 @@ lazy val testBackendSettings = Seq(
   scalaJsBundlerInline in Compile := true,
   scalaJsBundlerCompile in Compile <<= (scalaJsBundlerCompile in Compile).dependsOn(fullOptJS in Compile in libraryTestFrontend),
   scalaJsBundlerAssets in Compile += {
-    import com.karasiq.scalajsbundler.dsl.{Script, _}
-
     val videoJs = github("videojs", "video.js", "5.8.0") / "dist"
     val jsDeps = Seq(
       // jQuery
