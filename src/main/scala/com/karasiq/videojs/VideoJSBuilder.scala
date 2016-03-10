@@ -17,7 +17,7 @@ case class VideoJSBuilder(sources: Seq[VideoSource] = Nil, controls: Boolean = t
   def width(value: Int): VideoJSBuilder = copy(width = value)
   def height(value: Int): VideoJSBuilder = copy(height = value)
   def techOrder(value: String*): VideoJSBuilder = copy(techOrder = value)
-  def ready(value: VideoJSPlayer ⇒ Unit): VideoJSBuilder = copy(ready = VjsUtils.ready(value))
+  def ready(value: Player ⇒ Unit): VideoJSBuilder = copy(ready = VjsUtils.ready(value))
   def options(opts: (String, js.Any)*): VideoJSBuilder = copy(additional = opts)
 
   def build(): dom.Element = {

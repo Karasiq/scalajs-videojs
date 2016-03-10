@@ -11,7 +11,7 @@ import scala.scalajs.js.|
 // TODO: Documentation
 @js.native
 @JSName("videojs")
-object VideoJS extends VideoJSComponent {
+object VideoJS extends Component {
   /**
     * Doubles as the main function for users to create a player instance and also the main library object.
     * The videojs function can be used to initialize or retrieve a player.

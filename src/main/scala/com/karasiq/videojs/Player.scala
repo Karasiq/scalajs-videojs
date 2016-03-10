@@ -9,14 +9,14 @@ import scala.scalajs.js.|
 
 @js.native
 @JSName("Player")
-object VideoJSPlayer extends js.Object {
+object Player extends js.Object {
   /**
     * Player object constructor
     * @param tag The original video tag used for configuring options
     * @param options Object of option names and values
     * @param ready Ready callback function
     */
-  def apply(tag: Element, options: js.Object = ???, ready: js.Function = ???): VideoJSPlayer = js.native
+  def apply(tag: Element, options: js.Object = ???, ready: js.Function = ???): Player = js.native
 
   /**
     * Gets tag settings
@@ -31,7 +31,7 @@ object VideoJSPlayer extends js.Object {
   */
 //noinspection AccessorLikeMethodIsEmptyParen
 @js.native
-trait VideoJSPlayer extends VideoJSComponent {
+trait Player extends Component {
   /**
     * Add a remote text track
     * @param options Options for remote text track

@@ -5,8 +5,8 @@ val scalaJsLibraryName: String = "videojs"
 
 lazy val commonSettings = Seq(
   organization := "com.github.karasiq",
-  isSnapshot := false,
-  version := "1.0.1",
+  isSnapshot := true,
+  version := "1.0.2-SNAPSHOT",
   scalaVersion := "2.11.7"
 )
 

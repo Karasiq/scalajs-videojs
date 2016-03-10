@@ -9,15 +9,15 @@ import scala.scalajs.js.|
 
 // TODO: Documentation
 @js.native
-@JSName("Player")
-object VideoJSComponent extends js.Object {
+@JSName("Component")
+object Component extends js.Object {
   /**
     * Constructor
     * @param player Main Player
     * @param options Object of option names and values
     * @param ready Ready callback function
     */
-  def apply(player: VideoJSPlayer, options: js.Object = ???, ready: js.Function = ???): VideoJSComponent = js.native
+  def apply(player: Player, options: js.Object = ???, ready: js.Function = ???): Component = js.native
 
   def getComponent(name: String): js.Object = js.native
 
@@ -28,18 +28,18 @@ object VideoJSComponent extends js.Object {
   * @see [[http://docs.videojs.com/docs/api/component.html]]
   */
 @js.native
-trait VideoJSComponent extends js.Object {
+trait Component extends js.Object {
   def $(selector: String, context: Element | String = ???): Element = js.native
 
   def $$(selector: String, context: Element | String = ???): NodeList = js.native
 
-  def addChild(child: String | VideoJSComponent, options: js.Object = ???): Unit = js.native
+  def addChild(child: String | Component, options: js.Object = ???): Unit = js.native
 
   def addClass(classToAdd: String): Unit = js.native
 
   def buildCSSClass(): String = js.native
 
-  def children(): js.Array[VideoJSComponent] = js.native
+  def children(): js.Array[Component] = js.native
 
   def clearInterval(intervalId: Int): Unit = js.native
 
@@ -57,9 +57,9 @@ trait VideoJSComponent extends js.Object {
 
   def enableTouchActivity(): Unit = js.native
 
-  def getChild(name: String): VideoJSComponent = js.native
+  def getChild(name: String): Component = js.native
 
-  def getChildById(id: String): VideoJSComponent = js.native
+  def getChildById(id: String): Component = js.native
 
   def hasClass(classToCheck: String): Boolean = js.native
 
@@ -73,25 +73,25 @@ trait VideoJSComponent extends js.Object {
 
   def name(): String = js.native
 
-  def off(component: VideoJSComponent, event: String, handler: js.Function): this.type = js.native
+  def off(component: Component, event: String, handler: js.Function): this.type = js.native
 
   def off(event: String, handler: js.Function): this.type = js.native
 
-  def on(component: VideoJSComponent, event: String, handler: js.Function): this.type = js.native
+  def on(component: Component, event: String, handler: js.Function): this.type = js.native
 
   def on(event: String, handler: js.Function): this.type = js.native
 
-  def one(component: VideoJSComponent, event: String, handler: js.Function): this.type = js.native
+  def one(component: Component, event: String, handler: js.Function): this.type = js.native
 
   def one(event: String, handler: js.Function): this.type = js.native
 
   def options(obj: js.Object): js.Object = js.native
 
-  def player(): VideoJSPlayer = js.native
+  def player(): Player = js.native
 
   def ready(fn: js.Function, sync: Boolean): this.type = js.native
 
-  def removeChild(component: VideoJSComponent): Unit = js.native
+  def removeChild(component: Component): Unit = js.native
 
   def removeClass(classToRemove: String): Unit = js.native
 
