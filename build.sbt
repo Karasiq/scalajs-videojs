@@ -5,15 +5,15 @@ val scalaJsLibraryName: String = "videojs"
 
 lazy val commonSettings = Seq(
   organization := "com.github.karasiq",
-  isSnapshot := true,
-  version := "1.0.2-SNAPSHOT",
+  version := "1.0.2",
+  isSnapshot := version.value.endsWith("SNAPSHOT"),
   scalaVersion := "2.11.7"
 )
 
 lazy val librarySettings = Seq(
   name := s"scalajs-$scalaJsLibraryName",
   libraryDependencies ++= Seq(
-    "org.scala-js" %%% "scalajs-dom" % "0.8.2"
+    "org.scala-js" %%% "scalajs-dom" % "0.9.0"
   ),
   jsDependencies ++= {
     val videoJs = "org.webjars.bower" % "video-js" % "5.7.1"
@@ -95,7 +95,7 @@ lazy val testFrontendSettings = Seq(
   persistLauncher in Compile := true,
   name := s"scalajs-$scalaJsLibraryName-test-frontend",
   libraryDependencies ++= Seq(
-    "be.doeraene" %%% "scalajs-jquery" % "0.8.1"
+    "be.doeraene" %%% "scalajs-jquery" % "0.9.0"
   )
 )
 
