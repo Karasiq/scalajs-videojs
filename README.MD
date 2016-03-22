@@ -1,4 +1,4 @@
-# scalajs-videojs [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.6.svg)](http://scala-js.org) [![Version](http://img.shields.io/badge/version-1.0.2-blue.svg?style=flat)]()
+# scalajs-videojs [![Build Status](https://travis-ci.org/Karasiq/scalajs-videojs.svg?branch=master)](https://travis-ci.org/Karasiq/scalajs-videojs) [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.6.svg)](http://scala-js.org) [![Version](http://img.shields.io/badge/version-1.0.2-blue.svg?style=flat)]()
 [Scala.js](http://scala-js.org/) bindings for [Video.js](https://github.com/videojs/video.js)
 
 # How to use
