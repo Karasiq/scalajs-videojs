@@ -4,7 +4,7 @@
 # How to use
 Add dependency to your `build.sbt`:
 ```scala
-libraryDependencies += "com.karasiq" %%% "scalajs-videojs" % "1.0.2"
+libraryDependencies += "com.github.karasiq" %%% "scalajs-videojs" % "1.0.2"
 ```
 
 # Examples
