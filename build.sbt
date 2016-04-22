@@ -32,8 +32,8 @@ lazy val librarySettings = Seq(
   licenses := Seq("The MIT License" → url("http://opensource.org/licenses/MIT")),
   homepage := Some(url(s"https://github.com/Karasiq/${name.value}")),
   pomExtra := <scm>
-    <url>git@github.com:Karasiq/${name.value}.git</url>
-    <connection>scm:git:git@github.com:Karasiq/${name.value}.git</connection>
+    <url>git@github.com:Karasiq/{name.value}.git</url>
+    <connection>scm:git:git@github.com:Karasiq/{name.value}.git</connection>
   </scm>
     <developers>
       <developer>
