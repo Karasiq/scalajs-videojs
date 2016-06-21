@@ -25,9 +25,10 @@ object TestApp extends JSApp {
       .controls(true)
       .poster("http://www.webmfiles.org/wp-content/uploads/2010/05/webm-files.jpg")
       .dimensions(640, 360)
-      .ready(_.on("ended", () ⇒ {
-        dom.console.log("Video on ended")
-      }))
+      .ready { player ⇒
+        player.bigPlayButton.el().setAttribute("style", "color: red;")
+        player.on("ended", () ⇒ dom.console.log("Video on ended"))
+      }
       .build()
   }
 
