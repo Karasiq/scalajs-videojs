@@ -1,5 +1,6 @@
 package com.karasiq.videojs
 
+import com.karasiq.videojs.components.ControlBar
 import org.scalajs.dom.raw.TimeRanges
 import org.scalajs.dom.{Element, MediaError}
 
@@ -485,4 +486,11 @@ trait Player extends Component {
     * 0 is off (muted), 1.0 is all the way up, 0.5 is half way.
     */
   def volume(): Double = js.native
+
+  // Components
+  val posterImage: Component = js.native
+  val textTrackDisplay: Component = js.native
+  val loadingSpinner: Component = js.native
+  val bigPlayButton: Component = js.native
+  val controlBar: ControlBar = js.native
 }
