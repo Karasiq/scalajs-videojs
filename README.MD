@@ -1,10 +1,10 @@
-# scalajs-videojs [![Build Status](https://travis-ci.org/Karasiq/scalajs-videojs.svg?branch=master)](https://travis-ci.org/Karasiq/scalajs-videojs) [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.6.svg)](http://scala-js.org) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.karasiq/scalajs-videojs_sjs0.6_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.karasiq/scalajs-videojs_sjs0.6_2.11)
+# scalajs-videojs [![Build Status](https://travis-ci.org/Karasiq/scalajs-videojs.svg?branch=master)](https://travis-ci.org/Karasiq/scalajs-videojs) [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.14.svg)](http://scala-js.org) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.karasiq/scalajs-videojs_sjs0.6_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.karasiq/scalajs-videojs_sjs0.6_2.12)
 [Scala.js](http://scala-js.org/) bindings for [Video.js](https://github.com/videojs/video.js)
 
 # How to use
 Add dependency to your `build.sbt`:
 ```scala
-libraryDependencies += "com.github.karasiq" %%% "scalajs-videojs" % "1.0.4"
+libraryDependencies += "com.github.karasiq" %%% "scalajs-videojs" % "1.0.5"
 ```
 
 # Examples

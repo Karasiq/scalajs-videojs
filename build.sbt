@@ -5,15 +5,16 @@ val scalaJsLibraryName: String = "videojs"
 
 lazy val commonSettings = Seq(
   organization := "com.github.karasiq",
-  version := "1.0.4",
+  version := "1.0.5",
   isSnapshot := version.value.endsWith("SNAPSHOT"),
-  scalaVersion := "2.11.8"
+  scalaVersion := "2.12.1"
 )
 
 lazy val librarySettings = Seq(
   name := s"scalajs-$scalaJsLibraryName",
+  crossScalaVersions := Seq("2.11.8", "2.12.1"),
   libraryDependencies ++= Seq(
-    "org.scala-js" %%% "scalajs-dom" % "0.9.0"
+    "org.scala-js" %%% "scalajs-dom" % "0.9.1"
   ),
   jsDependencies ++= {
     val videoJs = "org.webjars.bower" % "video-js" % "5.7.1"
@@ -45,6 +46,7 @@ lazy val librarySettings = Seq(
 )
 
 lazy val testBackendSettings = Seq(
+  scalaVersion := "2.11.8",
   name := s"scalajs-$scalaJsLibraryName-test",
   resolvers += Resolver.sonatypeRepo("snapshots"),
   libraryDependencies ++= {
@@ -81,8 +83,8 @@ lazy val testBackendSettings = Seq(
       Html from TestPageAssets.index,
 
       // Scala.js app
-      Script from file("test") / "frontend" / "target" / "scala-2.11" / s"scalajs-$scalaJsLibraryName-test-frontend-opt.js",
-      Script from file("test") / "frontend" / "target" / "scala-2.11" / s"scalajs-$scalaJsLibraryName-test-frontend-launcher.js"
+      Script from file("test") / "frontend" / "target" / "scala-2.12" / s"scalajs-$scalaJsLibraryName-test-frontend-opt.js",
+      Script from file("test") / "frontend" / "target" / "scala-2.12" / s"scalajs-$scalaJsLibraryName-test-frontend-launcher.js"
     )
 
     val fonts = fontPackage("VideoJS", videoJs % "font/VideoJS", "font", Seq("eot", "svg", "ttf", "woff"))
@@ -95,7 +97,7 @@ lazy val testFrontendSettings = Seq(
   persistLauncher in Compile := true,
   name := s"scalajs-$scalaJsLibraryName-test-frontend",
   libraryDependencies ++= Seq(
-    "be.doeraene" %%% "scalajs-jquery" % "0.9.0"
+    "be.doeraene" %%% "scalajs-jquery" % "0.9.1"
   )
 )
 
