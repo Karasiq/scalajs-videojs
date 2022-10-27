@@ -6,20 +6,14 @@ import org.scalajs.dom.Element
 import org.scalajs.jquery._
 
 import scala.language.postfixOps
-import scala.scalajs.js.JSApp
-import scala.scalajs.js.annotation.JSExport
 
-@JSExport
-object TestApp extends JSApp {
-  @JSExport
-  override def main(): Unit = {
-    jQuery(() ⇒ {
-      val videos = Seq(renderWebm(), renderYoutube())
-      videos.foreach(dom.document.body.appendChild)
-    })
+object TestApp extends App {
+  jQuery { () ⇒
+    val videos = Seq(renderWebm(), renderYoutube())
+    videos.foreach(dom.document.body.appendChild)
   }
 
-  private def renderWebm(): Element = {
+  private def renderWebm(): Element =
     VideoJSBuilder()
       .sources(VideoSource("video/webm", "http://video.webmfiles.org/elephants-dream.webm"))
       .controls(true)
@@ -30,9 +24,8 @@ object TestApp extends JSApp {
         player.on("ended", () ⇒ dom.console.log("Video on ended"))
       }
       .build()
-  }
 
-  private def renderYoutube(): Element = {
+  private def renderYoutube(): Element =
     VideoJSBuilder()
       .techOrder("youtube")
       .sources(VideoSource("video/youtube", "https://www.youtube.com/watch?v=xjS6SftYQaQ"))
@@ -44,5 +37,4 @@ object TestApp extends JSApp {
       }
       .options("iv_load_policy" → 1)
       .build()
-  }
 }

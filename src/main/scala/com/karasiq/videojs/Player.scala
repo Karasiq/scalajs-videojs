@@ -5,11 +5,11 @@ import org.scalajs.dom.raw.TimeRanges
 import org.scalajs.dom.{Element, MediaError}
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSName
+import scala.scalajs.js.annotation.{JSGlobal, JSName}
 import scala.scalajs.js.|
 
 @js.native
-@JSName("Player")
+@JSGlobal("Player")
 object Player extends js.Object {
   /**
     * Player object constructor

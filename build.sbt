@@ -1,116 +1,162 @@
+import com.karasiq.scalajsbundler.compilers.{AssetCompilers, ConcatCompiler}
+import com.karasiq.scalajsbundler.dsl.{Script, _}
+import sbt.Def
 import sbt.Keys._
 
+// Global settings
+
+// Reload on .sbt change
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
+// Git versioning
+enablePlugins(GitVersioning)
+
+ThisBuild / git.useGitDescribe       := true
+ThisBuild / git.uncommittedSignifier := None
+ThisBuild / versionScheme            := Some("pvp")
+
+def _isSnapshotByGit: Def.Initialize[Boolean] =
+  Def.setting(git.gitCurrentTags.value.isEmpty || git.gitUncommittedChanges.value)
+
+ThisBuild / version := (ThisBuild / version).value + (if (_isSnapshotByGit.value)
+                                                        "-SNAPSHOT"
+                                                      else
+                                                        "")
+
 // Settings
-val scalaJsLibraryName: String = "videojs"
+val ScalaJsLibraryName: String = "videojs"
 
-lazy val commonSettings = Seq(
-  organization := "com.github.karasiq",
-  version := "1.0.5",
-  isSnapshot := version.value.endsWith("SNAPSHOT"),
-  scalaVersion := "2.12.1"
-)
-
-lazy val librarySettings = Seq(
-  name := s"scalajs-$scalaJsLibraryName",
-  crossScalaVersions := Seq("2.11.8", "2.12.1"),
-  libraryDependencies ++= Seq(
-    "org.scala-js" %%% "scalajs-dom" % "0.9.1"
-  ),
-  jsDependencies ++= {
-    val videoJs = "org.webjars.bower" % "video-js" % "5.7.1"
-    Seq(RuntimeDOM, videoJs / "dist/video.min.js")
-  },
-  publishMavenStyle := true,
-  publishTo := {
-    val nexus = "https://oss.sonatype.org/"
-    if (isSnapshot.value)
-      Some("snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("releases" at nexus + "service/local/staging/deploy/maven2")
-  },
-  publishArtifact in Test := false,
-  pomIncludeRepository := { _ ⇒ false },
-  licenses := Seq("The MIT License" → url("http://opensource.org/licenses/MIT")),
-  homepage := Some(url(s"https://github.com/Karasiq/${name.value}")),
-  pomExtra := <scm>
-    <url>git@github.com:Karasiq/{name.value}.git</url>
-    <connection>scm:git:git@github.com:Karasiq/{name.value}.git</connection>
-  </scm>
-    <developers>
-      <developer>
-        <id>karasiq</id>
-        <name>Piston Karasiq</name>
-        <url>https://github.com/Karasiq</url>
-      </developer>
-    </developers>
-)
-
-lazy val testBackendSettings = Seq(
-  scalaVersion := "2.11.8",
-  name := s"scalajs-$scalaJsLibraryName-test",
-  resolvers += Resolver.sonatypeRepo("snapshots"),
-  libraryDependencies ++= {
-    val sprayV = "1.3.3"
-    val akkaV = "2.4.0"
-    Seq(
-      "com.typesafe.akka" %% "akka-actor" % akkaV,
-      "io.spray" %% "spray-can" % sprayV,
-      "io.spray" %% "spray-routing-shapeless2" % sprayV,
-      "io.spray" %% "spray-json" % "1.3.2"
-    )
-  },
-  mainClass in Compile := Some("com.karasiq.scalajstest.backend.TestApp"),
-  scalaJsBundlerInline in Compile := true,
-  scalaJsBundlerCompile in Compile <<= (scalaJsBundlerCompile in Compile).dependsOn(fullOptJS in Compile in libraryTestFrontend),
-  scalaJsBundlerAssets in Compile += {
-    import com.karasiq.scalajsbundler.dsl.{Script, _}
-    val videoJs = github("videojs", "video.js", "5.8.0") / "dist"
-    val jsDeps = Seq(
-      // jQuery
-      Script from url("https://code.jquery.com/jquery-2.1.4.min.js"),
-
-      // Video.js
-      Script from url(videoJs % "video.min.js"),
-      Style from url(videoJs % "video-js.min.css"),
-      Static("video-js.swf") from url(videoJs % "video-js.swf"),
-
-      // Plugins
-      Script from url(github("eXon", "videojs-youtube", "2.0.8") % "dist/Youtube.min.js")
-    )
-
-    val appFiles = Seq(
-      // Static
-      Html from TestPageAssets.index,
-
-      // Scala.js app
-      Script from file("test") / "frontend" / "target" / "scala-2.12" / s"scalajs-$scalaJsLibraryName-test-frontend-opt.js",
-      Script from file("test") / "frontend" / "target" / "scala-2.12" / s"scalajs-$scalaJsLibraryName-test-frontend-launcher.js"
-    )
-
-    val fonts = fontPackage("VideoJS", videoJs % "font/VideoJS", "font", Seq("eot", "svg", "ttf", "woff"))
-
-    Bundle("index", jsDeps ++ appFiles ++ fonts: _*)
-  }
-)
-
-lazy val testFrontendSettings = Seq(
-  persistLauncher in Compile := true,
-  name := s"scalajs-$scalaJsLibraryName-test-frontend",
-  libraryDependencies ++= Seq(
-    "be.doeraene" %%% "scalajs-jquery" % "0.9.1"
+lazy val commonSettings =
+  Seq(
+    organization := "com.github.karasiq",
+    scalaVersion := "2.12.1"
   )
-)
+
+lazy val librarySettings =
+  Seq(
+    name               := s"scalajs-$ScalaJsLibraryName",
+    crossScalaVersions := Seq("2.11.8", "2.12.1", "2.13.7"),
+    libraryDependencies ++= Seq(
+      "org.scala-js" %%% "scalajs-dom" % "1.0.0"
+    )
+  ) ++ inConfig(Compile)(Seq(
+    npmDependencies ++= Seq(
+      "video.js" → "* 5.20.5"
+    )
+  ))
+
+lazy val publishSettings =
+  Seq(
+    publishMavenStyle      := true,
+    sonatypeSessionName    := s"scalajs-$ScalaJsLibraryName v${version.value}",
+    publishConfiguration   := publishConfiguration.value.withOverwrite(true),
+    publishTo              := sonatypePublishToBundle.value,
+    Test / publishArtifact := false,
+    pomIncludeRepository   := { _ ⇒ false },
+    licenses               := Seq("The MIT License" → url("http://opensource.org/licenses/MIT")),
+    homepage               := Some(url(s"https://github.com/Karasiq/scalajs-$ScalaJsLibraryName")),
+    scmInfo := Some(
+      ScmInfo(
+        new URL(s"https://github.com/Karasiq/scalajs-$ScalaJsLibraryName"),
+        s"scm:git:git@github.com:Karasiq/scalajs-$ScalaJsLibraryName.git"
+      )
+    ),
+    developers := List(
+      Developer(
+        "Karasiq",
+        "Piston Karasiq",
+        "karasiq.gh.cru5k@simplelogin.co",
+        new URL("https://github.com/Karasiq")
+      )
+    )
+  )
+
+lazy val noPublishSettings =
+  Seq(
+    publishArtifact           := false,
+    makePom / publishArtifact := false,
+    publishTo                 := Some(Resolver.file("Repo", file("target/repo")))
+  )
+
+lazy val testBackendSettings =
+  Seq(
+    scalaVersion := "2.11.8",
+    name         := s"scalajs-$ScalaJsLibraryName-test-backend",
+    // resolvers   ++= Resolver.sonatypeOssRepos("snapshots"),
+    libraryDependencies ++= {
+      val sprayV = "1.3.3"
+      val akkaV  = "2.4.0"
+      Seq(
+        "com.typesafe.akka" %% "akka-actor"               % akkaV,
+        "io.spray"          %% "spray-can"                % sprayV,
+        "io.spray"          %% "spray-routing-shapeless2" % sprayV,
+        "io.spray"          %% "spray-json"               % "1.3.2"
+      )
+    }
+  ) ++ inConfig(Compile)(
+    Seq(
+      mainClass            := Some("com.com.karasiq.scalajstest.backend.TestApp"),
+      scalaJsBundlerInline := false,
+      scalaJsBundlerCompile := scalaJsBundlerCompile
+        .dependsOn(testFrontend / fastOptJS)
+        .value,
+      compile := compile.dependsOn(scalaJsBundlerCompile).value,
+      scalaJsBundlerAssets += {
+        val videoJs = github("videojs", "video.js", "v5.8.0") / "dist"
+        val jsDeps =
+          Seq(
+            // jQuery
+            Script from url("https://code.jquery.com/jquery-2.1.4.min.js"),
+
+            // Video.js
+            Script from url(videoJs % "video.min.js"),
+            Style from url(videoJs % "video-js.min.css"),
+            Static("video-js.swf") from url(videoJs % "video-js.swf"),
+
+            // Plugins
+            Script from url(github("eXon", "videojs-youtube", "v2.0.8") % "dist/Youtube.min.js")
+          )
+
+        val appFiles =
+          Seq(
+            // Static
+            Html from TestPageAssets.index,
+            // Scala.js app
+            TestPageAssets.sourceMap(testFrontend, fastOpt = true).value
+          ) ++ scalaJsApplication(testFrontend, fastOpt = true).value
+
+        val fonts = fontPackage("VideoJS", videoJs % "font/VideoJS", "font", Seq("eot", "svg", "ttf", "woff"))
+
+        Bundle("index", jsDeps, appFiles, fonts)
+      },
+      Compile / scalaJsBundlerCompilers := AssetCompilers { case Mimes.javascript ⇒ ConcatCompiler }.<<=(
+        AssetCompilers.default
+      )
+    )
+  )
+
+lazy val testFrontendSettings =
+  Seq(
+    scalaJSUseMainModuleInitializer := true,
+    name                            := s"scalajs-$ScalaJsLibraryName-test-frontend",
+    libraryDependencies ++= Seq(
+      "be.doeraene" %%% "scalajs-jquery" % "1.0.0"
+    )
+  )
 
 // Projects
-lazy val library = Project("scalajs-library", file("."))
-  .settings(commonSettings, librarySettings)
-  .enablePlugins(ScalaJSPlugin)
+lazy val library =
+  (project in file("."))
+    .settings(commonSettings, librarySettings, publishSettings)
+    .enablePlugins(ScalaJSPlugin, scalajsbundler.sbtplugin.ScalaJSBundlerPlugin)
 
-lazy val libraryTest = Project(s"scalajs-$scalaJsLibraryName-test", file("test"))
-  .settings(commonSettings, testBackendSettings)
-  .enablePlugins(ScalaJSBundlerPlugin)
+lazy val testBackend =
+  (project in file("test"))
+    .settings(commonSettings, testBackendSettings, noPublishSettings)
+    .enablePlugins(SJSAssetBundlerPlugin)
 
-lazy val libraryTestFrontend = Project(s"scalajs-$scalaJsLibraryName-test-frontend", file("test") / "frontend")
-  .settings(commonSettings, testFrontendSettings)
-  .enablePlugins(ScalaJSPlugin)
-  .dependsOn(library)
+lazy val testFrontend =
+  (project in (file("test") / "frontend"))
+    .settings(commonSettings, testFrontendSettings, noPublishSettings)
+    .enablePlugins(ScalaJSPlugin)
+    .dependsOn(library)
