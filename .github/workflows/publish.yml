@@ -29,7 +29,7 @@ jobs:
             ~/.cache/coursier
             **/target
             !target/sonatype-staging
-          key: videojs-sbt
+          key: videojs-sbt-publish
       - name: Check event source
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
@@ -92,13 +92,18 @@ jobs:
                          set ThisBuild/version := "${{ env.version }}";
                          set ThisBuild/isSnapshot := ${{ env.is_snapshot }};
                          set pgpPassphrase := Some("${{ secrets.OSSRH_GPG_PASSPHRASE }}".toCharArray);
+                         +clean;
                          +publishSigned'
           sbt 'set Global/PgpKeys.gpgCommand := (baseDirectory.value / "gpg.sh").getAbsolutePath;
                set ThisBuild/version := "${{ env.version }}";
                set ThisBuild/isSnapshot := ${{ env.is_snapshot }};
                set pgpPassphrase := Some("${{ secrets.OSSRH_GPG_PASSPHRASE }}".toCharArray);
+               +clean;
                +publishSigned'
           if [[ "${{ env.is_snapshot }}" == "false" ]]; then
             sbt 'set ThisBuild/version := "${{ env.version }}";
                  sonatypeBundleRelease'
           fi
+          
+          # Clean library files
+          sbt +clean
