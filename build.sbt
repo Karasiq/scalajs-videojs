@@ -29,13 +29,16 @@ val ScalaJsLibraryName: String = "videojs"
 lazy val commonSettings =
   Seq(
     organization := "com.github.karasiq",
-    scalaVersion := "2.12.1"
+    scalaVersion := "2.13.4"
   )
 
 lazy val librarySettings =
   Seq(
-    name               := s"scalajs-$ScalaJsLibraryName",
-    crossScalaVersions := Seq("2.11.8", "2.12.1", "2.13.7"),
+    name := s"scalajs-$ScalaJsLibraryName",
+    crossScalaVersions := (if (ProjectDefs.scalaJSIs06)
+                             Seq("2.11.8", "2.12.1", "2.13.4")
+                           else
+                             Seq("2.12.1", "2.13.4")),
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "1.0.0"
     )

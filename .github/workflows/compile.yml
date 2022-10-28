@@ -25,5 +25,5 @@ jobs:
           key: videojs-sbt
       - name: Build project
         run: |
-          sbt -J-DSCALAJS_VERSION=0.6.33 '+compile; testServer/compile'
-          sbt '+compile; testServer/compile'
+          sbt -J-DSCALAJS_VERSION=0.6.33 '+compile; testBackend/compile'
+          sbt '+compile; testBackend/compile'
