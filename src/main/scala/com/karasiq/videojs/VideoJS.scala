@@ -4,13 +4,13 @@ import org.scalajs.dom.Element
 import org.scalajs.dom.raw.TimeRanges
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSGlobal, JSName}
+import scala.scalajs.js.annotation.{JSImport, JSName}
 import scala.scalajs.js.|
 
 //noinspection AccessorLikeMethodIsEmptyParen
 // TODO: Documentation
 @js.native
-@JSGlobal("videojs")
+@JSImport("video.js", JSImport.Default, "videojs")
 object VideoJS extends Component {
 
   /** Doubles as the main function for users to create a player instance and also the main library object. The videojs
@@ -34,7 +34,7 @@ object VideoJS extends Component {
     * @param data
     *   The data values to be translated
     * @example
-    *   {{{ VideoJS.addLanguage("es", js.Dynamic.literal(Hello = "Hola")) }}}
+    *   {{{VideoJS.addLanguage("es", js.Dynamic.literal(Hello = "Hola"))}}}
     */
   def addLanguage(code: String, data: js.Object): Unit =
     js.native
