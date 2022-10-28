@@ -15,7 +15,7 @@ object TestApp extends App {
 
   private def renderWebm(): Element =
     VideoJSBuilder()
-      .sources(VideoSource("video/webm", "http://video.webmfiles.org/elephants-dream.webm"))
+      .sources(VideoSource("video/webm", "https://dl8.webmfiles.org/elephants-dream.webm"))
       .controls(true)
       .poster("http://www.webmfiles.org/wp-content/uploads/2010/05/webm-files.jpg")
       .dimensions(640, 360)
