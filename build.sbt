@@ -1,27 +1,32 @@
-import com.karasiq.scalajsbundler.compilers.{AssetCompilers, ConcatCompiler}
-import com.karasiq.scalajsbundler.dsl.{Script, _}
-import sbt.Def
 import sbt.Keys._
+import com.karasiq.scalajsbundler.compilers.AssetCompilers
+import com.karasiq.scalajsbundler.dsl.{Script, _}
+
+// Projects
+lazy val library =
+  (project in file("."))
+    .settings(commonSettings, webpackSettings, librarySettings, publishSettings)
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+
+lazy val testFrontend =
+  (project in (file("test") / "frontend"))
+    .settings(commonSettings, webpackSettings, testFrontendSettings, noPublishSettings)
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+    .dependsOn(library)
+
+lazy val testBackend =
+  (project in file("test"))
+    .settings(commonSettings, testBackendSettings, noPublishSettings)
+    .enablePlugins(SJSAssetBundlerPlugin)
+
+lazy val all =
+  (project in file("target/temp_project"))
+    .aggregate(library, testFrontend, testBackend)
+
 
 // Global settings
-
 // Reload on .sbt change
 Global / onChangedBuildSource := ReloadOnSourceChanges
-
-// Git versioning
-enablePlugins(GitVersioning)
-
-ThisBuild / git.useGitDescribe       := true
-ThisBuild / git.uncommittedSignifier := None
-ThisBuild / versionScheme            := Some("pvp")
-
-def _isSnapshotByGit: Def.Initialize[Boolean] =
-  Def.setting(git.gitCurrentTags.value.isEmpty || git.gitUncommittedChanges.value)
-
-ThisBuild / version := (ThisBuild / version).value + (if (_isSnapshotByGit.value)
-                                                        "-SNAPSHOT"
-                                                      else
-                                                        "")
 
 // Settings
 val LibName: String = "videojs"
@@ -35,7 +40,7 @@ lazy val commonSettings =
 lazy val webpackSettings =
   inConfig(Compile)(Seq(
     webpackEmitSourceMaps := true,
-    webpack / version     := "5.74.0",
+    webpack / version     := (if (ProjectDefs.scalaJSIs06) "4.46.0" else "5.74.0"),
     npmExtraArgs         ++= Seq("--openssl-legacy-provider", "--legacy-peer-deps")
   ))
 
@@ -43,14 +48,14 @@ lazy val librarySettings =
   Seq(
     name := s"scalajs-$LibName",
     crossScalaVersions := (if (ProjectDefs.scalaJSIs06)
-                             Seq("2.11.8", "2.12.1", "2.13.4")
+                             Seq("2.11.12", "2.12.1", "2.13.4")
                            else
                              Seq("2.12.1", "2.13.4")),
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "1.0.0"
     ),
     Compile / npmDependencies ++= Seq(
-      "video.js" -> "*"
+      "video.js" -> "*5.20.5"
     )
   )
 
@@ -106,42 +111,23 @@ lazy val testBackendSettings =
     Seq(
       mainClass            := Some("com.com.karasiq.scalajstest.backend.TestApp"),
       scalaJsBundlerInline := false,
-      scalaJsBundlerCompile := scalaJsBundlerCompile
-        .dependsOn(testFrontend / fastOptJS / webpack)
-        .value,
-      compile := compile.dependsOn(scalaJsBundlerCompile).value,
       scalaJsBundlerAssets += {
-        val VideoJSDist = "https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/"
-        val jsDeps =
+
+        val staticFiles =
           Seq(
+            // Html file
+            Html from TestPageAssets.index,
+
             // jQuery
             Script from url("https://code.jquery.com/jquery-2.1.4.min.js"),
 
             // Video.js
-            // Script from url(videoJs % "video.min.js"),
-            Style from url(VideoJSDist + "video-js.css")
-            // Static("video-js.swf") from url(videoJs % "video-js.swf"),
-
-            // Plugins
-            // Script from url(github("eXon", "videojs-youtube", "v2.0.8") % "dist/Youtube.min.js")
+            Style from url("https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3") / "video-js.css"
           )
 
-        val appFiles =
-          scalaJsBundlerApplication(testFrontend, fastOpt = true).value ++ Seq(
-            // Static
-            Html from TestPageAssets.index,
-            // Scala.js app
-            TestPageAssets.sourceMap(testFrontend, fastOpt = true).value
-          )
-
-        val fonts =
-          Nil // fontPackage("VideoJS", VideoJSDist + "font/VideoJS", "font", Seq("eot", "svg", "ttf", "woff"))
-
-        Bundle("index", jsDeps, appFiles, fonts)
+        Bundle("index", staticFiles, SJSApps.bundlerApp(testFrontend, fastOpt = true).value)
       },
-      Compile / scalaJsBundlerCompilers := AssetCompilers { case Mimes.javascript => ConcatCompiler }.<<=(
-        AssetCompilers.default
-      )
+      Compile / scalaJsBundlerCompilers := AssetCompilers.keepJavaScriptAsIs
     )
   )
 
@@ -154,23 +140,7 @@ lazy val testFrontendSettings =
     ),
     Compile / npmDependencies ++= Seq(
       "video.js"        -> "^7.20.3",
-      "videojs-youtube" -> "^2.6.1"
+      "videojs-youtube" -> "^2.6.1",
+      "jquery"          -> "^2.1.4"
     )
   )
-
-// Projects
-lazy val library =
-  (project in file("."))
-    .settings(commonSettings, webpackSettings, librarySettings, publishSettings)
-    .enablePlugins(ScalaJSPlugin, scalajsbundler.sbtplugin.ScalaJSBundlerPlugin)
-
-lazy val testFrontend =
-  (project in (file("test") / "frontend"))
-    .settings(commonSettings, webpackSettings, testFrontendSettings, noPublishSettings)
-    .enablePlugins(ScalaJSPlugin, scalajsbundler.sbtplugin.ScalaJSBundlerPlugin)
-    .dependsOn(library)
-
-lazy val testBackend =
-  (project in file("test"))
-    .settings(commonSettings, testBackendSettings, noPublishSettings)
-    .enablePlugins(SJSAssetBundlerPlugin)

@@ -5,6 +5,9 @@
 Add dependency to your `build.sbt`:
 ```scala
 libraryDependencies += "com.github.karasiq" %%% "scalajs-videojs" % "%version%"
+
+// For scalajs 0.6.xx
+libraryDependencies += "com.github.karasiq" %%% "scalajs-videojs-sjs06" % "%version%"
 ```
 
 # Examples
