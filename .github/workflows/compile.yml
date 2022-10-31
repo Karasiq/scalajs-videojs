@@ -25,7 +25,7 @@ jobs:
           key: videojs-sbt-sjs1
       - name: Build project
         run: |
-          sbt +compile
+          sbt -J-DSCALAJS_VERSION=1.8.0 +compile
   compile-sjs06:
     name: Build project for Scala.js 0.6.xx
     runs-on: ubuntu-18.04
