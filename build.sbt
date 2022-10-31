@@ -1,27 +1,10 @@
-import com.karasiq.scalajsbundler.compilers.{AssetCompilers, ConcatCompiler}
-import com.karasiq.scalajsbundler.dsl.{Script, _}
-import sbt.Def
 import sbt.Keys._
+import com.karasiq.scalajsbundler.compilers.AssetCompilers
 
 // Global settings
 
 // Reload on .sbt change
 Global / onChangedBuildSource := ReloadOnSourceChanges
-
-// Git versioning
-enablePlugins(GitVersioning)
-
-ThisBuild / git.useGitDescribe       := true
-ThisBuild / git.uncommittedSignifier := None
-ThisBuild / versionScheme            := Some("pvp")
-
-def _isSnapshotByGit: Def.Initialize[Boolean] =
-  Def.setting(git.gitCurrentTags.value.isEmpty || git.gitUncommittedChanges.value)
-
-ThisBuild / version := (ThisBuild / version).value + (if (_isSnapshotByGit.value)
-                                                        "-SNAPSHOT"
-                                                      else
-                                                        "")
 
 // Settings
 val LibName: String = "videojs"
@@ -106,11 +89,9 @@ lazy val testBackendSettings =
     Seq(
       mainClass            := Some("com.com.karasiq.scalajstest.backend.TestApp"),
       scalaJsBundlerInline := false,
-      scalaJsBundlerCompile := scalaJsBundlerCompile
-        .dependsOn(testFrontend / fastOptJS / webpack)
-        .value,
-      compile := compile.dependsOn(scalaJsBundlerCompile).value,
       scalaJsBundlerAssets += {
+        import com.karasiq.scalajsbundler.dsl.{Script, _}
+
         val VideoJSDist = "https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/"
         val jsDeps =
           Seq(
@@ -127,21 +108,17 @@ lazy val testBackendSettings =
           )
 
         val appFiles =
-          scalaJsBundlerApplication(testFrontend, fastOpt = true).value ++ Seq(
+          Seq(
             // Static
-            Html from TestPageAssets.index,
-            // Scala.js app
-            TestPageAssets.sourceMap(testFrontend, fastOpt = true).value
+            Html from TestPageAssets.index
           )
 
         val fonts =
           Nil // fontPackage("VideoJS", VideoJSDist + "font/VideoJS", "font", Seq("eot", "svg", "ttf", "woff"))
 
-        Bundle("index", jsDeps, appFiles, fonts)
+        Bundle("index", jsDeps, appFiles, fonts, SJSApps.bundlerApp(testFrontend, fastOpt = true).value)
       },
-      Compile / scalaJsBundlerCompilers := AssetCompilers { case Mimes.javascript => ConcatCompiler }.<<=(
-        AssetCompilers.default
-      )
+      Compile / scalaJsBundlerCompilers := AssetCompilers.keepJavaScriptAsIs
     )
   )
 

@@ -1,13 +1,14 @@
 logLevel := Level.Warn
 
-// resolvers += Resolver.sonatypeRepo("snapshots")
+//noinspection ScalaDeprecation
+resolvers += Resolver.sonatypeRepo("snapshots")
 
 addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.1")
 
 addSbtPlugin("org.scala-js"       % "sbt-scalajs"              % ProjectDefs.ScalaJSVersion)
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.1.0")
 
-addSbtPlugin("com.github.karasiq" % "sbt-scalajs-bundler" % "1.2.2")
+addSbtPlugin("com.github.karasiq" % "sbt-scalajs-bundler" % "1.2.2-PR2-SNAPSHOT")
 
 if (ProjectDefs.scalaJSIs06)
   addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler-sjs06" % "0.19.0")
