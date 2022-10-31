@@ -128,12 +128,12 @@ lazy val testFrontendSettings =
 lazy val library =
   (project in file("."))
     .settings(commonSettings, webpackSettings, librarySettings, publishSettings)
-    .enablePlugins(ScalaJSPlugin, scalajsbundler.sbtplugin.ScalaJSBundlerPlugin)
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
 
 lazy val testFrontend =
   (project in (file("test") / "frontend"))
     .settings(commonSettings, webpackSettings, testFrontendSettings, noPublishSettings)
-    .enablePlugins(ScalaJSPlugin, scalajsbundler.sbtplugin.ScalaJSBundlerPlugin)
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .dependsOn(library)
 
 lazy val testBackend =
