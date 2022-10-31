@@ -1,5 +1,6 @@
 import sbt.Keys._
 import com.karasiq.scalajsbundler.compilers.AssetCompilers
+import com.karasiq.scalajsbundler.dsl.{Script, _}
 
 // Global settings
 
@@ -33,7 +34,7 @@ lazy val librarySettings =
       "org.scala-js" %%% "scalajs-dom" % "1.0.0"
     ),
     Compile / npmDependencies ++= Seq(
-      "video.js" -> "*"
+      "video.js" -> "* 7.20.3"
     )
   )
 
@@ -90,7 +91,6 @@ lazy val testBackendSettings =
       mainClass            := Some("com.com.karasiq.scalajstest.backend.TestApp"),
       scalaJsBundlerInline := false,
       scalaJsBundlerAssets += {
-        import com.karasiq.scalajsbundler.dsl.{Script, _}
 
         val staticFiles =
           Seq(
@@ -104,7 +104,7 @@ lazy val testBackendSettings =
             Style from url("https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3") / "video-js.css"
           )
 
-        Bundle("index", SJSApps.bundlerApp(testFrontend, fastOpt = true).value, staticFiles)
+        Bundle("index", staticFiles, SJSApps.bundlerApp(testFrontend, fastOpt = true).value)
       },
       Compile / scalaJsBundlerCompilers := AssetCompilers.keepJavaScriptAsIs
     )
@@ -119,7 +119,8 @@ lazy val testFrontendSettings =
     ),
     Compile / npmDependencies ++= Seq(
       "video.js"        -> "^7.20.3",
-      "videojs-youtube" -> "^2.6.1"
+      "videojs-youtube" -> "^2.6.1",
+      "jquery"          -> "^2.1.4"
     )
   )
 
