@@ -64,7 +64,7 @@ jobs:
 
       - name: Print changelog
         run: |
-          echo '${{steps.github_release.outputs.changelog}}'
+          echo '${{steps.github_release.outputs.changelog}}' > $GITHUB_STEP_SUMMARY
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
