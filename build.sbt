@@ -55,7 +55,7 @@ lazy val librarySettings =
       "org.scala-js" %%% "scalajs-dom" % "1.0.0"
     ),
     Compile / npmDependencies ++= Seq(
-      "video.js" -> "*5.20.5"
+      "video.js" -> "* 5.20.5"
     )
   )
 
