@@ -92,31 +92,19 @@ lazy val testBackendSettings =
       scalaJsBundlerAssets += {
         import com.karasiq.scalajsbundler.dsl.{Script, _}
 
-        val VideoJSDist = "https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/"
-        val jsDeps =
+        val staticFiles =
           Seq(
+            // Html file
+            Html from TestPageAssets.index,
+
             // jQuery
             Script from url("https://code.jquery.com/jquery-2.1.4.min.js"),
 
             // Video.js
-            // Script from url(videoJs % "video.min.js"),
-            Style from url(VideoJSDist + "video-js.css")
-            // Static("video-js.swf") from url(videoJs % "video-js.swf"),
-
-            // Plugins
-            // Script from url(github("eXon", "videojs-youtube", "v2.0.8") % "dist/Youtube.min.js")
+            Style from url("https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3") / "video-js.css"
           )
 
-        val appFiles =
-          Seq(
-            // Static
-            Html from TestPageAssets.index
-          )
-
-        val fonts =
-          Nil // fontPackage("VideoJS", VideoJSDist + "font/VideoJS", "font", Seq("eot", "svg", "ttf", "woff"))
-
-        Bundle("index", jsDeps, appFiles, fonts, SJSApps.bundlerApp(testFrontend, fastOpt = true).value)
+        Bundle("index", SJSApps.bundlerApp(testFrontend, fastOpt = true).value, staticFiles)
       },
       Compile / scalaJsBundlerCompilers := AssetCompilers.keepJavaScriptAsIs
     )
