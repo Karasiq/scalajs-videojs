@@ -41,7 +41,7 @@ lazy val webpackSettings =
 
 lazy val librarySettings =
   Seq(
-    name := s"scalajs-$ScalaJsLibraryName",
+    name := s"scalajs-$LibName",
     crossScalaVersions := (if (ProjectDefs.scalaJSIs06)
                              Seq("2.11.8", "2.12.1", "2.13.4")
                            else
