@@ -23,7 +23,6 @@ lazy val all =
   (project in file("target/temp_project"))
     .aggregate(library, testFrontend, testBackend)
 
-
 // Global settings
 // Reload on .sbt change
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -40,8 +39,11 @@ lazy val commonSettings =
 lazy val webpackSettings =
   inConfig(Compile)(Seq(
     webpackEmitSourceMaps := true,
-    webpack / version     := (if (ProjectDefs.scalaJSIs06) "4.46.0" else "5.74.0"),
-    npmExtraArgs         ++= Seq("--openssl-legacy-provider", "--legacy-peer-deps")
+    webpack / version := (if (ProjectDefs.scalaJSIs06)
+                            "4.46.0"
+                          else
+                            "5.74.0"),
+    npmExtraArgs ++= Seq("--openssl-legacy-provider", "--legacy-peer-deps")
   ))
 
 lazy val librarySettings =
@@ -51,9 +53,10 @@ lazy val librarySettings =
                              Seq("2.11.12", "2.12.1", "2.13.4")
                            else
                              Seq("2.12.1", "2.13.4")),
-    libraryDependencies ++= Seq(
-      "org.scala-js" %%% "scalajs-dom" % "1.0.0"
-    ),
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % (if (ProjectDefs.scalaJSIs06)
+                                                                 "1.0.0"
+                                                               else
+                                                                 "2.0.0"),
     Compile / npmDependencies ++= Seq(
       "video.js" -> "* 5.20.5"
     )
@@ -94,7 +97,7 @@ lazy val noPublishSettings =
 
 lazy val testBackendSettings =
   Seq(
-    scalaVersion := "2.11.8",
+    scalaVersion := "2.11.12",
     name         := s"scalajs-$LibName-test-backend",
     // resolvers   ++= Resolver.sonatypeOssRepos("snapshots"),
     libraryDependencies ++= {
@@ -127,17 +130,15 @@ lazy val testBackendSettings =
 
         Bundle("index", staticFiles, SJSApps.bundlerApp(testFrontend, fastOpt = true).value)
       },
-      Compile / scalaJsBundlerCompilers := AssetCompilers.keepJavaScriptAsIs
+      scalaJsBundlerCompilers := AssetCompilers.keepJavaScriptAsIs
     )
   )
 
 lazy val testFrontendSettings =
   Seq(
+    evictionErrorLevel              := util.Level.Debug,
     scalaJSUseMainModuleInitializer := true,
     name                            := s"scalajs-$LibName-test-frontend",
-    libraryDependencies ++= Seq(
-      "be.doeraene" %%% "scalajs-jquery" % "1.0.0"
-    ),
     Compile / npmDependencies ++= Seq(
       "video.js"        -> "^7.20.3",
       "videojs-youtube" -> "^2.6.1",

@@ -38,7 +38,7 @@ trait Component extends js.Object {
   def $(selector: String, context: Element | String = ???): Element =
     js.native
 
-  def $$(selector: String, context: Element | String = ???): NodeList =
+  def $$(selector: String, context: Element | String = ???): js.Dynamic = // NodeList
     js.native
 
   def addChild(child: String | Component, options: js.Object = ???): Unit =

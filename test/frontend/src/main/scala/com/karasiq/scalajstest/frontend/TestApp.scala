@@ -3,7 +3,6 @@ package com.karasiq.scalajstest.frontend
 import com.karasiq.videojs._
 import org.scalajs.dom
 import org.scalajs.dom.Element
-import org.scalajs.jquery._
 
 import scala.language.postfixOps
 import scala.scalajs.js
@@ -15,15 +14,18 @@ object TestApp extends App {
   object VideoJSYoutube extends js.Object
 
   VideoJSImport.initialize()
-  //noinspection ScalaUnusedExpression
+  // noinspection ScalaUnusedExpression
   VideoJSYoutube
 
-  jQuery { () ⇒
-    dom.window.asInstanceOf[js.Dynamic].SVideoJS = VideoJS
+  dom.window.addEventListener(
+    "DOMContentLoaded",
+    { _: dom.Event =>
+      dom.window.asInstanceOf[js.Dynamic].SVideoJS = VideoJS
 
-    val videos = Seq(renderWebm(), renderYoutube())
-    videos.foreach(dom.document.body.appendChild)
-  }
+      val videos = Seq(renderWebm(), renderYoutube())
+      videos.foreach(dom.document.body.appendChild)
+    }
+  )
 
   private def renderWebm(): Element =
     VideoJSBuilder()
@@ -31,9 +33,9 @@ object TestApp extends App {
       .controls(true)
       .poster("http://www.webmfiles.org/wp-content/uploads/2010/05/webm-files.jpg")
       .dimensions(640, 360)
-      .ready { player ⇒
+      .ready { player =>
         player.bigPlayButton.el().setAttribute("style", "color: red;")
-        player.on("ended", () ⇒ dom.console.log("Video on ended"))
+        player.on("ended", () => dom.console.log("Video on ended"))
       }
       .build()
 
@@ -43,10 +45,10 @@ object TestApp extends App {
       .sources(VideoSource("video/youtube", "https://www.youtube.com/watch?v=xjS6SftYQaQ"))
       .controls(true)
       .dimensions(640, 360)
-      .ready { video ⇒
+      .ready { video =>
         video.playbackRate(0.5)
         video.play()
       }
-      .options("iv_load_policy" → 1)
+      .options("iv_load_policy" -> 1)
       .build()
 }
