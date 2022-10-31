@@ -58,7 +58,7 @@ lazy val librarySettings =
                                                                else
                                                                  "2.0.0"),
     Compile / npmDependencies ++= Seq(
-      "video.js" -> "* 5.20.5"
+      "video.js" -> "*"
     )
   )
 
