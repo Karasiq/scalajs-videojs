@@ -6,9 +6,21 @@ import org.scalajs.dom.Element
 import org.scalajs.jquery._
 
 import scala.language.postfixOps
+import scala.scalajs.js
+import scala.scalajs.js.annotation.JSImport
 
 object TestApp extends App {
+  @js.native
+  @JSImport("videojs-youtube", JSImport.Default)
+  object VideoJSYoutube extends js.Object
+
+  VideoJSImport.initialize()
+  //noinspection ScalaUnusedExpression
+  VideoJSYoutube
+
   jQuery { () ⇒
+    dom.window.asInstanceOf[js.Dynamic].SVideoJS = VideoJS
+
     val videos = Seq(renderWebm(), renderYoutube())
     videos.foreach(dom.document.body.appendChild)
   }
