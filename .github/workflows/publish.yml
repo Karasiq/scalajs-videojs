@@ -29,7 +29,9 @@ jobs:
             ~/.cache/coursier
             **/target
             !target/sonatype-staging
-          key: videojs-sbt-publish
+          key: publish-sbt-${{ hashFiles('**/src/main/**/*.scala', 'build.sbt', 'project/*.scala', 'project/*.sbt') }}
+          restore-keys: |
+            publish-sbt-
       - name: Check event source
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true

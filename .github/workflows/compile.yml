@@ -24,7 +24,9 @@ jobs:
             ~/.cache/coursier
             **/target
             !target/sonatype-staging
-          key: videojs-sbt-sjs1
+          key: compile-sjs1-sbt-${{ hashFiles('**/src/main/**/*.scala', 'build.sbt', 'project/*.scala', 'project/*.sbt') }}
+          restore-keys: |
+            compile-sjs1-sbt-
       - name: Build project
         run: |
           sbt -J-DSCALAJS_VERSION=1.8.0 +compile
@@ -45,7 +47,9 @@ jobs:
             ~/.cache/coursier
             **/target
             !target/sonatype-staging
-          key: videojs-sbt-sjs06
+          key: compile-sjs06-sbt-${{ hashFiles('**/src/main/**/*.scala', 'build.sbt', 'project/*.scala', 'project/*.sbt') }}
+          restore-keys: |
+            compile-sjs06-sbt-
       - name: Build project
         run: |
           sbt -J-DSCALAJS_VERSION=0.6.33 +compile
