@@ -45,7 +45,7 @@ object VideoJSOptions {
       obj.sources = sources.toJSArray
     if (techOrder.nonEmpty)
       obj.techOrder = techOrder.toJSArray
-    additional.foreach { case (key, value) ⇒ obj.updateDynamic(key)(value) }
+    additional.foreach { case (key, value) => obj.updateDynamic(key)(value) }
     obj.asInstanceOf[VideoJSOptions]
   }
 }

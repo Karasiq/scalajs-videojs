@@ -4,7 +4,7 @@ logLevel := Level.Warn
 
 addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.1")
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % ProjectDefs.ScalaJSVersion)
+addSbtPlugin("org.scala-js"       % "sbt-scalajs"              % ProjectDefs.ScalaJSVersion)
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.1.0")
 
 addSbtPlugin("com.github.karasiq" % "sbt-scalajs-bundler" % "1.2.2")
@@ -16,7 +16,7 @@ else {
   addSbtPlugin("ch.epfl.scala"                     % "sbt-scalajs-bundler" % "0.21.0")
 }
 
-addSbtPlugin("com.github.sbt" % "sbt-git" % "2.0.0")
+addSbtPlugin("com.github.sbt" % "sbt-git"      % "2.0.0")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.10")
 
 libraryDependencies += "com.lihaoyi" %% "scalatags" % "0.11.0"

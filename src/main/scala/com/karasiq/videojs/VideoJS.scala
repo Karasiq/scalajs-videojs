@@ -13,7 +13,7 @@ object VideoJSImport {
     try {
       org.scalajs.dom.window.asInstanceOf[js.Dynamic].HELP_IMPROVE_VIDEOJS = false
       org.scalajs.dom.window.asInstanceOf[js.Dynamic].videojs = VideoJS
-    } catch { case _: Throwable ⇒ }
+    } catch { case _: Throwable => }
 
 }
 

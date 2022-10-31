@@ -21,12 +21,12 @@ object TestPageAssets {
   @nowarn
   def sourceMap(project: Project, fastOpt: Boolean = false): Def.Initialize[PageContent] =
     Def.setting {
-      import sbt.{project ⇒ _, _}
+      import sbt.{project => _, _}
       import sbt.Keys.{name, scalaVersion, target}
 
-      val nameValue    = (name in project).value
-      val targetValue  = (target in project).value
-      val versionValue = (scalaVersion in project).value
+      val nameValue    = (project / name).value
+      val targetValue  = (project / target).value
+      val versionValue = (project / scalaVersion).value
 
       val output = targetValue / s"scala-${CrossVersion.binaryScalaVersion(versionValue)}" / "scalajs-bundler" / "main"
       val sourceMapName =
@@ -44,9 +44,9 @@ object TestPageAssets {
       import sbt.Keys.{name, scalaVersion, target}
       import sbt.{project ⇒ _, _}
 
-      val nameValue    = (name in project).value
-      val targetValue  = (target in project).value
-      val versionValue = (scalaVersion in project).value
+      val nameValue    = (project / name).value
+      val targetValue  = (project / target).value
+      val versionValue = (project / scalaVersion).value
 
       val output = targetValue / s"scala-${CrossVersion.binaryScalaVersion(versionValue)}"
       val sourceMapName =

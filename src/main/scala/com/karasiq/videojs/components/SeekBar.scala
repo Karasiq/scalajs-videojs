@@ -8,5 +8,5 @@ import scala.scalajs.js
 trait SeekBar extends Component {
   val loadProgressBar: Component = js.native
   val playProgressBar: Component = js.native
-  val seekHandle: Component = js.native
+  val seekHandle: Component      = js.native
 }

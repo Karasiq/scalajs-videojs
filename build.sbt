@@ -50,7 +50,7 @@ lazy val librarySettings =
       "org.scala-js" %%% "scalajs-dom" % "1.0.0"
     ),
     Compile / npmDependencies ++= Seq(
-      "video.js" → "*"
+      "video.js" -> "*"
     )
   )
 
@@ -61,8 +61,8 @@ lazy val publishSettings =
     publishConfiguration   := publishConfiguration.value.withOverwrite(true),
     publishTo              := sonatypePublishToBundle.value,
     Test / publishArtifact := false,
-    pomIncludeRepository   := { _ ⇒ false },
-    licenses               := Seq("The MIT License" → url("http://opensource.org/licenses/MIT")),
+    pomIncludeRepository   := { _ => false },
+    licenses               := Seq("The MIT License" -> url("http://opensource.org/licenses/MIT")),
     homepage               := Some(url(s"https://github.com/Karasiq/scalajs-$LibName")),
     scmInfo := Some(
       ScmInfo(
@@ -134,11 +134,12 @@ lazy val testBackendSettings =
             TestPageAssets.sourceMap(testFrontend, fastOpt = true).value
           )
 
-        val fonts = Nil // fontPackage("VideoJS", VideoJSDist + "font/VideoJS", "font", Seq("eot", "svg", "ttf", "woff"))
+        val fonts =
+          Nil // fontPackage("VideoJS", VideoJSDist + "font/VideoJS", "font", Seq("eot", "svg", "ttf", "woff"))
 
         Bundle("index", jsDeps, appFiles, fonts)
       },
-      Compile / scalaJsBundlerCompilers := AssetCompilers { case Mimes.javascript ⇒ ConcatCompiler }.<<=(
+      Compile / scalaJsBundlerCompilers := AssetCompilers { case Mimes.javascript => ConcatCompiler }.<<=(
         AssetCompilers.default
       )
     )
@@ -152,8 +153,8 @@ lazy val testFrontendSettings =
       "be.doeraene" %%% "scalajs-jquery" % "1.0.0"
     ),
     Compile / npmDependencies ++= Seq(
-      "video.js"        → "^7.20.3",
-      "videojs-youtube" → "^2.6.1"
+      "video.js"        -> "^7.20.3",
+      "videojs-youtube" -> "^2.6.1"
     )
   )
 

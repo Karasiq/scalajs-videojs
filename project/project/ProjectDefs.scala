@@ -1,4 +1,5 @@
 //noinspection DuplicatedCode,ScalaPackageName
+
 object ProjectDefs {
   val ScalaJSVersion: String = sys.props.getOrElse("SCALAJS_VERSION", "1.8.0")
 
