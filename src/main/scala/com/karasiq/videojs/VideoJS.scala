@@ -4,8 +4,18 @@ import org.scalajs.dom.Element
 import org.scalajs.dom.raw.TimeRanges
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSImport, JSName}
+import scala.scalajs.js.annotation.{JSExportTopLevel, JSGlobal, JSImport, JSName}
 import scala.scalajs.js.|
+
+object VideoJSImport {
+  // noinspection ScalaUnusedExpression
+  def initialize(): Unit =
+    try {
+      org.scalajs.dom.window.asInstanceOf[js.Dynamic].HELP_IMPROVE_VIDEOJS = false
+      org.scalajs.dom.window.asInstanceOf[js.Dynamic].videojs = VideoJS
+    } catch { case _: Throwable ⇒ }
+
+}
 
 //noinspection AccessorLikeMethodIsEmptyParen
 // TODO: Documentation
