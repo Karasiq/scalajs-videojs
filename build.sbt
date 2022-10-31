@@ -2,8 +2,29 @@ import sbt.Keys._
 import com.karasiq.scalajsbundler.compilers.AssetCompilers
 import com.karasiq.scalajsbundler.dsl.{Script, _}
 
-// Global settings
+// Projects
+lazy val library =
+  (project in file("."))
+    .settings(commonSettings, webpackSettings, librarySettings, publishSettings)
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
 
+lazy val testFrontend =
+  (project in (file("test") / "frontend"))
+    .settings(commonSettings, webpackSettings, testFrontendSettings, noPublishSettings)
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+    .dependsOn(library)
+
+lazy val testBackend =
+  (project in file("test"))
+    .settings(commonSettings, testBackendSettings, noPublishSettings)
+    .enablePlugins(SJSAssetBundlerPlugin)
+
+lazy val all =
+  (project in file("target/temp_project"))
+    .aggregate(library, testFrontend, testBackend)
+
+
+// Global settings
 // Reload on .sbt change
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -19,7 +40,7 @@ lazy val commonSettings =
 lazy val webpackSettings =
   inConfig(Compile)(Seq(
     webpackEmitSourceMaps := true,
-    webpack / version     := "5.74.0",
+    webpack / version     := (if (ProjectDefs.scalaJSIs06) "4.46.0" else "5.74.0"),
     npmExtraArgs         ++= Seq("--openssl-legacy-provider", "--legacy-peer-deps")
   ))
 
@@ -27,14 +48,14 @@ lazy val librarySettings =
   Seq(
     name := s"scalajs-$LibName",
     crossScalaVersions := (if (ProjectDefs.scalaJSIs06)
-                             Seq("2.11.8", "2.12.1", "2.13.4")
+                             Seq("2.11.12", "2.12.1", "2.13.4")
                            else
                              Seq("2.12.1", "2.13.4")),
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "1.0.0"
     ),
     Compile / npmDependencies ++= Seq(
-      "video.js" -> "* 7.20.3"
+      "video.js" -> "*5.20.5"
     )
   )
 
@@ -123,20 +144,3 @@ lazy val testFrontendSettings =
       "jquery"          -> "^2.1.4"
     )
   )
-
-// Projects
-lazy val library =
-  (project in file("."))
-    .settings(commonSettings, webpackSettings, librarySettings, publishSettings)
-    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
-
-lazy val testFrontend =
-  (project in (file("test") / "frontend"))
-    .settings(commonSettings, webpackSettings, testFrontendSettings, noPublishSettings)
-    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
-    .dependsOn(library)
-
-lazy val testBackend =
-  (project in file("test"))
-    .settings(commonSettings, testBackendSettings, noPublishSettings)
-    .enablePlugins(SJSAssetBundlerPlugin)

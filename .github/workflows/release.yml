@@ -30,11 +30,11 @@ jobs:
                 },
                 {
                   "title": "## 🐛 Fixes",
-                  "labels": ["fix", "fixes"]
+                  "labels": ["fix", "fixes", "bug"]
                 },
                 {
                   "title": "## 🧪 Other",
-                  "labels": ["other"]
+                  "labels": ["other", "enhancement"]
                 },
                 {
                     "title": "## 📦 Dependencies",
