@@ -11,7 +11,7 @@ addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.1.0")
 if (ProjectDefs.scalaJSIs06)
   Seq(
     addSbtPlugin("ch.epfl.scala"                     % "sbt-scalajs-bundler-sjs06" % "0.19.0"),
-    addSbtPlugin("com.thoughtworks.sbt-scala-js-map" % "sbt-scala-js-map"          % "4.1.0"),
+    addSbtPlugin("com.thoughtworks.sbt-scala-js-map" % "sbt-scala-js-map"          % "4.1.1"),
     addSbtPlugin("com.github.karasiq"                % "sbt-scalajs-bundler-sjs06" % "1.2.2-PR2-SNAPSHOT")
   )
 else
