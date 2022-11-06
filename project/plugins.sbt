@@ -25,6 +25,6 @@ addSbtPlugin("com.github.sbt" % "sbt-git"      % "2.0.0")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.10")
 
 libraryDependencies ++= Seq(
-  "com.google.javascript" % "closure-compiler" % "v20190513",
+  "com.google.javascript" % "closure-compiler" % "v20221102",
   "com.lihaoyi"          %% "scalatags"        % "0.11.0"
 )
