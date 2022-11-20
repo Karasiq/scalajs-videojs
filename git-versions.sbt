@@ -9,6 +9,6 @@ def _isSnapshotByGit: Def.Initialize[Boolean] =
   Def.setting(git.gitCurrentTags.value.isEmpty || git.gitUncommittedChanges.value)
 
 ThisBuild / version := (ThisBuild / version).value + (if (_isSnapshotByGit.value)
-  "-SNAPSHOT"
-else
-  "")
+                                                        "-SNAPSHOT"
+                                                      else
+                                                        "")
