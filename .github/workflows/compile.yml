@@ -52,4 +52,4 @@ jobs:
             compile-sjs06-sbt-
       - name: Build project
         run: |
-          sbt -J-DSCALAJS_VERSION=0.6.33 +compile
+          sbt -J-DSCALAJS_VERSION=1.12.0 +compile
