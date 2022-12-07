@@ -21,7 +21,7 @@ else
     addSbtPlugin("com.github.karasiq"                % "sbt-scalajs-bundler" % "1.2.2-PR2-SNAPSHOT")
   )
 
-addSbtPlugin("com.github.sbt" % "sbt-git"      % "2.0.0")
+addSbtPlugin("com.github.sbt" % "sbt-git"      % "2.0.1")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.14")
 
 libraryDependencies ++= Seq(
