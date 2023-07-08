@@ -6,7 +6,7 @@ resolvers += Resolver.sonatypeRepo("snapshots")
 addSbtPlugin("org.jetbrains.scala" % "sbt-ide-settings" % "1.1.1")
 
 addSbtPlugin("org.scala-js"       % "sbt-scalajs"              % ProjectDefs.ScalaJSVersion)
-addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.1.0")
+addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
 
 if (ProjectDefs.scalaJSIs06)
   Seq(
