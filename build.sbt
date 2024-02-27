@@ -33,7 +33,7 @@ val LibName: String = "videojs"
 lazy val commonSettings =
   Seq(
     organization := "com.github.karasiq",
-    scalaVersion := "2.13.4"
+    scalaVersion := "2.13.13"
   )
 
 lazy val webpackSettings =
