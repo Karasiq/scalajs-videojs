@@ -39,7 +39,7 @@ lazy val commonSettings =
 lazy val webpackSettings =
   inConfig(Compile)(Seq(
     webpackEmitSourceMaps := true,
-    webpack / version := (if (ProjectDefs.scalaJSIs06)
+    webpack / version     := (if (ProjectDefs.scalaJSIs06)
                             "4.46.0"
                           else
                             "5.74.0"),
@@ -48,7 +48,7 @@ lazy val webpackSettings =
 
 lazy val librarySettings =
   Seq(
-    name := s"scalajs-$LibName",
+    name               := s"scalajs-$LibName",
     crossScalaVersions := (if (ProjectDefs.scalaJSIs06)
                              Seq("2.11.12", "2.12.1", "2.13.4")
                            else
@@ -72,7 +72,7 @@ lazy val publishSettings =
     pomIncludeRepository   := { _ => false },
     licenses               := Seq("The MIT License" -> url("http://opensource.org/licenses/MIT")),
     homepage               := Some(url(s"https://github.com/Karasiq/scalajs-$LibName")),
-    scmInfo := Some(
+    scmInfo                := Some(
       ScmInfo(
         new URL(s"https://github.com/Karasiq/scalajs-$LibName"),
         s"scm:git:git@github.com:Karasiq/scalajs-$LibName.git"
@@ -139,7 +139,7 @@ lazy val testFrontendSettings =
     evictionErrorLevel              := util.Level.Debug,
     scalaJSUseMainModuleInitializer := true,
     name                            := s"scalajs-$LibName-test-frontend",
-    Compile / npmDependencies ++= Seq(
+    Compile / npmDependencies      ++= Seq(
       "video.js"        -> "^7.20.3",
       "videojs-youtube" -> "^2.6.1",
       "jquery"          -> "^2.1.4"
